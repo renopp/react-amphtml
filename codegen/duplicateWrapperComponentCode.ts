@@ -83,7 +83,7 @@ export default Object.entries(newRules.dupes).reduce(
       }
 
       // @ts-ignore
-      const ${componentName}: React.FunctionComponent<${componentName}Props> = (props): ReactNode => {
+      const ${componentName}: React.FunctionComponent<${componentName}Props> = (props): React.ReactNode => {
         ${dupeComponentCode}
         return null;
       };

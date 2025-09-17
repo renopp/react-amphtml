@@ -140,7 +140,7 @@ export default ({
       extensionSpec,
     })}
     // @ts-ignore
-    ${exportComponent} const ${componentName}: React.FunctionComponent<${componentName}> = (${propsArgument}: ${componentName}): ReactNode => {
+    ${exportComponent} const ${componentName}: React.FunctionComponent<${componentName}> = (${propsArgument}: ${componentName}): React.ReactNode => {
     ${requiresExtensionContext ? `const context = useContext(AmpScriptsContext);` : ''}  
     ${requiresExtensionContext}
       return (
