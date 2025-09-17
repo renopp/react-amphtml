@@ -65,9 +65,6 @@ export default newRules.tags.reduce(
           ]
         : [false, {}];
 
-    const contextArgument = requiresExtensionContext
-      ? ', context: AmpScriptsManagerContext'
-      : '';
 
     if (COMPONENT_OVERRIDES[tagNameToComponentName(tagName)]) {
       return componentOverrideTemplate({
@@ -79,7 +76,6 @@ export default newRules.tags.reduce(
         extensionPropsGiven,
         extensionProps,
         requiresExtensionContext,
-        contextArgument,
         propsCode,
       });
     }
@@ -90,7 +86,6 @@ export default newRules.tags.reduce(
       componentName,
       dupeName,
       requiresExtensionContext,
-      contextArgument,
       propsCode,
     });
   },

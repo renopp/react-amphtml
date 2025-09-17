@@ -1,6 +1,6 @@
 {
-  "name": "react-amphtml",
-  "version": "4.0.2",
+  "name": "@renopp/react-amphtml",
+  "version": "5.0.0-beta-1",
   "description": "Use amphtml components inside your React apps easily!",
   "main": "./index.js",
   "typings": "./index.d.ts",
@@ -28,9 +28,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/dfrankland/react-amphtml.git"
+    "url": "https://github.com/renopp/react-amphtml"
   },
-  "author": "Dylan Frankland",
+  "author": "renopp",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.4.5",

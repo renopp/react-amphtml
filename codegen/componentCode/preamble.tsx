@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, import/no-unresolved, import/extensions */
 
-// TODO: Remove `{ Component }` when Rollup fixes its code splitting.
-// Currently, this fixes an `React__default is undefined` error.
 // @ts-ignore
-import React, { Component, ReactNode } from 'react';
+import React, { useContext } from 'react';
 // @ts-ignore
 import PropTypes from 'prop-types';
 
@@ -13,17 +11,10 @@ import { CONTEXT_KEY } from '../constants';
 // @ts-ignore
 import contextHelper from '../lib/contextHelper';
 // @ts-ignore
-import { AmpScriptsManagerContext } from '../setup/AmpScriptsManager';
+import { AmpScriptsContext } from '../setup/AmpScriptsManager';
 
 // @ts-ignore
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-
-// @ts-ignore
-const REACT_AMPHTML_CONTEXT = {
-  [CONTEXT_KEY]: PropTypes.shape({
-    addExtension: PropTypes.func.isRequired,
-  }),
-};
 
 // The following were all copied from the global JSX IntrinsicElements
 // interface.
