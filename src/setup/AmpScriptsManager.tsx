@@ -1,9 +1,4 @@
-import React, {
-  ReactNode,
-  Component,
-  WeakValidationMap,
-  ValidationMap,
-} from 'react';
+import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import AmpScripts from './AmpScripts';
 import { CONTEXT_KEY } from '../constants';
@@ -12,34 +7,30 @@ export interface AmpScriptsManagerContext {
   [CONTEXT_KEY]: AmpScripts;
 }
 
+export const AmpScriptsContext = React.createContext<AmpScriptsManagerContext>({
+  [CONTEXT_KEY]: new AmpScripts(),
+});
+
 export interface AmpScriptsManagerProps {
   children: ReactNode;
   ampScripts: AmpScripts;
 }
 
-export default class AmpScriptsManager extends Component<
-  AmpScriptsManagerProps
-> {
-  public static childContextTypes: ValidationMap<AmpScriptsManagerContext>;
+const AmpScriptsManager: React.FC<AmpScriptsManagerProps> = ({ children, ampScripts }) => {
+  const contextValue: AmpScriptsManagerContext = {
+    [CONTEXT_KEY]: ampScripts,
+  };
 
-  public static propTypes: WeakValidationMap<AmpScriptsManagerProps>;
-
-  public getChildContext(): AmpScriptsManagerContext {
-    const { ampScripts } = this.props;
-    return { [CONTEXT_KEY]: ampScripts };
-  }
-
-  public render(): ReactNode {
-    const { children } = this.props;
-    return React.Children.only(children);
-  }
-}
-
-AmpScriptsManager.childContextTypes = {
-  [CONTEXT_KEY]: PropTypes.instanceOf(AmpScripts).isRequired,
+  return (
+    <AmpScriptsContext.Provider value={contextValue}>
+      {React.Children.only(children)}
+    </AmpScriptsContext.Provider>
+  );
 };
 
 AmpScriptsManager.propTypes = {
   children: PropTypes.node.isRequired,
   ampScripts: PropTypes.instanceOf(AmpScripts).isRequired,
 };
+
+export default AmpScriptsManager;

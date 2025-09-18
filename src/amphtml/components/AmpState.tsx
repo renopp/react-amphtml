@@ -1,7 +1,8 @@
-import React, { ReactElement } from 'react';
+import * as React from 'react';
+import { ReactElement, useContext } from 'react';
 import PropTypes from 'prop-types';
 import contextHelper from '../../lib/contextHelper';
-import { CONTEXT_KEY } from '../../constants';
+import { AmpScriptsContext } from '../../setup/AmpScriptsManager';
 
 export interface AmpStateProps {
   children?: any;
@@ -9,10 +10,12 @@ export interface AmpStateProps {
   src?: string;
 }
 
-const AmpState: React.FunctionComponent<AmpStateProps> = (
-  { children, id, src },
-  context,
-): ReactElement => {
+const AmpState: React.FunctionComponent<AmpStateProps> = ({
+  children,
+  id,
+  src,
+}): ReactElement => {
+  const context = useContext(AmpScriptsContext);
   contextHelper({ context, extension: 'amp-bind' });
 
   if (src) {
@@ -36,12 +39,6 @@ AmpState.propTypes = {
   id: PropTypes.string,
   children: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   src: PropTypes.string,
-};
-
-AmpState.contextTypes = {
-  [CONTEXT_KEY]: PropTypes.shape({
-    addExtension: PropTypes.func.isRequired,
-  }),
 };
 
 AmpState.defaultProps = {

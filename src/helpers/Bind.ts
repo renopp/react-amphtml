@@ -1,9 +1,8 @@
 import React, { ReactElement } from 'react'; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types';
 import contextHelper from '../lib/contextHelper';
-import { CONTEXT_KEY } from '../constants';
 import { ON_ATTRIBUTE } from './Action';
-import { AmpScriptsManagerContext } from '../setup/AmpScriptsManager';
+
 import { Script, ScriptProps } from '../amphtml/amphtml';
 
 export const BLACKLIST = [ON_ATTRIBUTE];
@@ -20,10 +19,15 @@ export interface BindProps {
   [prop: string]: string | undefined | any;
 }
 
-const Bind: React.FunctionComponent<BindProps> = (
-  { children, version, ...props }: BindProps,
-  context: AmpScriptsManagerContext,
-): ReactElement => {
+import { useContext } from 'react';
+import { AmpScriptsContext } from '../setup/AmpScriptsManager';
+
+const Bind: React.FunctionComponent<BindProps> = ({
+  children,
+  version,
+  ...props
+}: BindProps): ReactElement => {
+  const context = useContext(AmpScriptsContext);
   contextHelper({ context, extension: 'amp-bind', version });
 
   const boundAttributeProps = Object.entries(props).reduce(
@@ -51,10 +55,5 @@ Bind.propTypes = {
   version: Script.propTypes && Script.propTypes.version,
 };
 
-Bind.contextTypes = {
-  [CONTEXT_KEY]: PropTypes.shape({
-    addExtension: PropTypes.func.isRequired,
-  }),
-};
 
 export default Bind;

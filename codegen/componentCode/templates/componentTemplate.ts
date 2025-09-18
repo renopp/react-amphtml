@@ -107,7 +107,6 @@ export default ({
   componentName,
   dupeName,
   requiresExtensionContext,
-  contextArgument,
   propsCode,
 }: {
   code: string;
@@ -115,15 +114,9 @@ export default ({
   componentName: string;
   dupeName?: string;
   requiresExtensionContext: string;
-  contextArgument: string;
   propsCode: PropsCode;
 }): string => {
   const componentPropsName = `${componentName}Props`;
-  const contextTypes = requiresExtensionContext
-    ? `
-      ${componentName}.contextTypes = REACT_AMPHTML_CONTEXT;
-    `
-    : '';
   const propsArgument = 'props';
   const newPropsVar = 'newProps';
   const camelCasedTagName = camelCase(tagName);
@@ -173,7 +166,8 @@ export default ({
       dupeName,
       propsCode,
     })}
-    ${exportComponent} const ${componentName}: React.FunctionComponent<${componentPropsName}> = (${propsArgument}: ${componentPropsName}${contextArgument}) => {
+    ${exportComponent} const ${componentName}: React.FunctionComponent<${componentPropsName}> = (${propsArgument}: ${componentPropsName}) => {
+      ${requiresExtensionContext ? `const context = useContext(AmpScriptsContext);` : ''}
       ${requiresExtensionContext}
       ${swapClassNameForClass}
       ${customElementBoolean}
@@ -184,6 +178,5 @@ export default ({
     };
     ${propTypesReducer({ isCustomElement, componentName, propsCode })}
     ${defaultPropsReducer({ componentName, propsCode })}
-    ${contextTypes}
   `;
 };

@@ -108,7 +108,6 @@ export default ({
   extensionPropsGiven,
   extensionProps,
   requiresExtensionContext,
-  contextArgument,
   propsCode,
 }: {
   code: string;
@@ -122,7 +121,6 @@ export default ({
     isCustomTemplate?: boolean;
   };
   requiresExtensionContext: string;
-  contextArgument: string;
   propsCode: PropsCode;
 }): string => {
   const componentOverrideName = `${componentName}Override`;
@@ -142,8 +140,9 @@ export default ({
       extensionSpec,
     })}
     // @ts-ignore
-    ${exportComponent} const ${componentName}: React.FunctionComponent<${componentName}> = (${propsArgument}: ${componentName}${contextArgument}): ReactNode => {
-      ${requiresExtensionContext}
+    ${exportComponent} const ${componentName}: React.FunctionComponent<${componentName}> = (${propsArgument}: ${componentName}): React.ReactNode => {
+    ${requiresExtensionContext ? `const context = useContext(AmpScriptsContext);` : ''}  
+    ${requiresExtensionContext}
       return (
         <${componentOverrideName} {...${propsSpread}} />
       );
